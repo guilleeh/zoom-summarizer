@@ -1,10 +1,15 @@
 const db = require("./db/authDb");
 const jwtLib = require("./lib/jwt");
+const awsLib = require("./lib/aws");
 const bcrypt = require("bcrypt");
 const express = require("express");
+const fileUpload = require("express-fileupload");
+const cors = require("cors");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+app.use(fileUpload());
 
 app.get(`/`, async (req, res) => {
   res.json({ success: true, data: "Hello World!" });
@@ -79,6 +84,22 @@ app.post("/signin", async (req, res) => {
       error: `Authentication failed.`,
     });
   }
+});
+
+// PROTECTED ROUTES
+
+app.post("/upload", jwtLib.authorize, async (req, res) => {
+  console.log(req.files);
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  const file = req.files.uploadedFile;
+  // upload to s3
+  const filePath = await awsLib.uploadFile(file);
+  // call aai api
+
+  res.status(200).json({ success: true, data: filePath });
 });
 
 const PORT = process.env.PORT || 3001;
