@@ -55,10 +55,21 @@ const getAllRecordings = async (id) => {
   return recordings;
 };
 
+const getSingleRecording = async (transcriptId) => {
+  const recording = await prisma.recording.findFirst({
+    where: {
+      transcriptId,
+    },
+  });
+
+  return recording;
+};
+
 module.exports = {
   createUser,
   createRecording,
   getSingleUserByEmail,
   getSingleUserById,
   getAllRecordings,
+  getSingleRecording,
 };

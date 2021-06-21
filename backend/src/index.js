@@ -1,6 +1,7 @@
 const db = require("./db/db");
 const jwtLib = require("./lib/jwt");
 const awsLib = require("./lib/aws");
+const pdfLib = require("./lib/pdf");
 const fetch = require("node-fetch");
 const bcrypt = require("bcrypt");
 const express = require("express");
@@ -195,6 +196,49 @@ app.get("/uploads", jwtLib.authorize, async (req, res) => {
     const results = await Promise.all(responses);
 
     res.status(200).json({ success: true, data: results });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      error: "There was an error retrieving your recordings.",
+    });
+  }
+});
+
+app.post("/generate-pdf", jwtLib.authorize, async (req, res) => {
+  const { transcriptId } = req.body;
+
+  if (!transcriptId) {
+    return res
+      .status(400)
+      .json({ success: false, error: "You must provide the transcript id." });
+  }
+
+  try {
+    const url = process.env.ASSEMBLYAI_API_URL + "/" + transcriptId;
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        authorization: process.env.ASSEMBLYAI_API_KEY,
+        "content-type": "application/json",
+      },
+    });
+
+    const result = await response.json();
+    if (result.error) {
+      console.log(result);
+      res.status(500).json({
+        success: false,
+        error: "There was an error retrieving your recording.",
+      });
+      return;
+    }
+
+    const { text } = result;
+    const recordingRecord = await db.getSingleRecording(transcriptId);
+    const { name } = recordingRecord;
+
+    pdfLib.generatePdf("Transcript", text, res);
   } catch (e) {
     console.log(e);
     res.status(500).json({
