@@ -157,6 +157,53 @@ app.post("/upload", jwtLib.authorize, async (req, res) => {
   }
 });
 
+app.get("/uploads", jwtLib.authorize, async (req, res) => {
+  const { id } = req.query;
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ success: false, error: "You must provide the user id." });
+  }
+
+  try {
+    const recordings = await db.getAllRecordings(Number(id));
+
+    const responses = recordings.map(async (rec) => {
+      // call aai api
+      const url = process.env.ASSEMBLYAI_API_URL + "/" + rec.transcriptId;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          authorization: process.env.ASSEMBLYAI_API_KEY,
+          "content-type": "application/json",
+        },
+      });
+
+      const result = await response.json();
+      if (result.error) {
+        console.log(result);
+        res.status(500).json({
+          success: false,
+          error: "There was an error retrieving your recordings.",
+        });
+        return;
+      }
+      return result;
+    });
+
+    const results = await Promise.all(responses);
+
+    res.status(200).json({ success: true, data: results });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      error: "There was an error retrieving your recordings.",
+    });
+  }
+});
+
 const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () =>

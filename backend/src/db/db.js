@@ -47,9 +47,18 @@ const getSingleUserById = async (id) => {
   return user;
 };
 
+const getAllRecordings = async (id) => {
+  const recordings = await prisma.recording.findMany({
+    where: { userId: id },
+  });
+
+  return recordings;
+};
+
 module.exports = {
   createUser,
   createRecording,
   getSingleUserByEmail,
   getSingleUserById,
+  getAllRecordings,
 };
