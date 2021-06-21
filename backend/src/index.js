@@ -1,10 +1,12 @@
-const db = require("./db/authDb");
+const db = require("./db/db");
 const jwtLib = require("./lib/jwt");
 const awsLib = require("./lib/aws");
+const fetch = require("node-fetch");
 const bcrypt = require("bcrypt");
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
+const { response } = require("express");
 const app = express();
 
 app.use(cors());
@@ -89,17 +91,70 @@ app.post("/signin", async (req, res) => {
 // PROTECTED ROUTES
 
 app.post("/upload", jwtLib.authorize, async (req, res) => {
-  console.log(req.files);
-  if (!req.files || Object.keys(req.files).length === 0) {
-    return res.status(400).send("No files were uploaded.");
+  const { id } = req.body;
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ success: false, error: "You must provide the user id." });
   }
 
-  const file = req.files.uploadedFile;
-  // upload to s3
-  const filePath = await awsLib.uploadFile(file);
-  // call aai api
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res
+      .status(400)
+      .json({ success: false, error: "No files were uploaded." });
+  }
 
-  res.status(200).json({ success: true, data: filePath });
+  try {
+    const file = req.files.uploadedFile;
+    // upload to s3
+    const uploadedFile = await awsLib.uploadFile(file);
+    const { Location, key } = uploadedFile;
+
+    const body = {
+      audio_url: Location,
+    };
+
+    // call aai api
+    const response = await fetch(process.env.ASSEMBLYAI_API_URL, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        authorization: process.env.ASSEMBLYAI_API_KEY,
+        "content-type": "application/json",
+      },
+    });
+
+    const result = await response.json();
+    if (result.error) {
+      console.log(result);
+      res.status(500).json({
+        success: false,
+        error: "There was an error uploading your file.",
+      });
+      return;
+    }
+
+    // get user email
+    const user = await db.getSingleUserById(Number(id));
+    const { email } = user;
+
+    // save transcript id to db
+    console.log(result);
+    const recording = await db.createRecording(
+      file.name,
+      key,
+      result.id,
+      email
+    );
+    res.status(200).json({ success: true, data: recording });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      error: "There was an error uploading your file.",
+    });
+  }
 });
 
 const PORT = process.env.PORT || 3001;

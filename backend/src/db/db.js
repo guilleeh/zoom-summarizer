@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+// CREATE
 const createUser = async (email, password, name) => {
   const result = await prisma.user.create({
     data: {
@@ -12,6 +13,24 @@ const createUser = async (email, password, name) => {
   return result;
 };
 
+const createRecording = async (name, s3Key, transcriptId, email) => {
+  const result = await prisma.recording.create({
+    data: {
+      name,
+      s3Key,
+      transcriptId,
+      user: {
+        connect: {
+          email,
+        },
+      },
+    },
+  });
+
+  return result;
+};
+
+// READ
 const getSingleUserByEmail = async (email) => {
   const user = await prisma.user.findFirst({
     where: { email },
@@ -20,7 +39,17 @@ const getSingleUserByEmail = async (email) => {
   return user;
 };
 
+const getSingleUserById = async (id) => {
+  const user = await prisma.user.findFirst({
+    where: { id },
+  });
+
+  return user;
+};
+
 module.exports = {
   createUser,
+  createRecording,
   getSingleUserByEmail,
+  getSingleUserById,
 };

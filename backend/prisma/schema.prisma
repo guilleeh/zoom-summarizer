@@ -21,6 +21,7 @@ model Recording {
   updatedAt DateTime @updatedAt
   name     String
   s3Key   String
+  transcriptId String
   user    User?    @relation(fields: [userId], references: [id])
   userId  Int?
 }
