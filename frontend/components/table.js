@@ -1,4 +1,5 @@
 const Table = ({ data, handleDownload }) => {
+  console.log(data);
   const renderStatus = (status) => {
     switch (status) {
       case 'completed':
@@ -31,8 +32,16 @@ const Table = ({ data, handleDownload }) => {
     }
   };
 
-  if (!data) {
-    return <h2>There is no data.</h2>;
+  if (!data || data.length === 0) {
+    return (
+      <h3 className="text-2xl font-bold text-center py-10 leading-7 text-gray-900">
+        It looks like you don't have any uploaded recordings.{' '}
+        <a className="underline text-blue-800" href="/upload">
+          Upload
+        </a>{' '}
+        and audio file to see your transcripts here!
+      </h3>
+    );
   }
 
   return (

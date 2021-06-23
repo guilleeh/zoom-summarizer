@@ -54,7 +54,6 @@ app.post("/signin", async (req, res) => {
     res
       .status(400)
       .json({ success: false, error: "Email and password are required." });
-    next();
     return;
   }
 
@@ -164,7 +163,6 @@ app.post("/upload", jwtLib.authorize, async (req, res) => {
     const { email } = user;
 
     // save transcript id to db
-    console.log(result);
     const recording = await db.createRecording(
       file.name,
       key,

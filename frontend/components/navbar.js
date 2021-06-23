@@ -5,6 +5,7 @@ import Logo from '../public/logo.png';
 
 const Navbar = ({ me }) => {
   const router = useRouter();
+  const name = me ? `Welcome, ${me.name.split(' ')[0]}` : 'Welcome';
 
   const handleLogout = () => {
     window.localStorage.removeItem('jwt');
@@ -77,7 +78,7 @@ const Navbar = ({ me }) => {
                   href="/"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
-                  Recordings
+                  Transcripts
                 </a>
               </div>
             </div>
@@ -86,7 +87,7 @@ const Navbar = ({ me }) => {
             <div class="ml-3 relative">
               <div>
                 <span class="text-gray-300 px-3 py-2 rounded-md text-sm font-medium">
-                  {me ? `Welcome, ${me.name}.` : 'Welcome'}
+                  {name}
                 </span>
                 <button
                   type="button"

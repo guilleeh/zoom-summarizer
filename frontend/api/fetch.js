@@ -40,7 +40,6 @@ export const apiFetch = async (
 
       return response.data;
     } catch (e) {
-      console.log(e);
       if (e?.response?.status === 401) {
         Router.push('/sign-in');
       }

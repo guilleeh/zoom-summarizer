@@ -68,7 +68,7 @@ export default function Home() {
       <Navbar me={me} />
       <div className="container mx-auto py-4">
         <h2 class="text-2xl font-bold text-center py-10 leading-7 text-gray-900 sm:text-3xl sm:truncate">
-          Recording Transcripts
+          Transcripts
         </h2>
         <div className="flex justify-end">
           <Reload isLoading={isLoading} reload={recordingsCall} />

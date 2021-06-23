@@ -19,7 +19,6 @@ const SignIn = () => {
     setLoading(true);
     const { email, password } = data;
     const resp = await apiFetch(url, 'post', null, { email, password });
-    console.log(resp);
     if (resp.success) {
       window.localStorage.setItem('jwt', resp.data.jwt);
       window.localStorage.setItem('id', resp.data.id);
@@ -42,6 +41,15 @@ const SignIn = () => {
           <h2 className=" text-center text-3xl font-extrabold text-gray-900">
             Sign In
           </h2>
+          <p class="mt-2 text-center text-sm text-gray-600">
+            Or
+            <a
+              href="/sign-up"
+              class="font-medium ml-1 text-indigo-600 hover:text-indigo-500"
+            >
+              sign up for a new account.
+            </a>
+          </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" name="remember" value="true" />
