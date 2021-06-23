@@ -1,7 +1,14 @@
 import axios from 'axios';
 import Router from 'next/router';
 
-export const apiFetch = async (url, method, params, body, isAuth = false) => {
+export const apiFetch = async (
+  url,
+  method,
+  params,
+  body,
+  isAuth = false,
+  responseType = null,
+) => {
   let options = {
     withCredentials: false,
     params,
@@ -10,6 +17,10 @@ export const apiFetch = async (url, method, params, body, isAuth = false) => {
   if (isAuth) {
     const jwt = localStorage.getItem('jwt');
     options.headers['Authorization'] = `Bearer ${jwt}`;
+  }
+
+  if (responseType) {
+    options.responseType = responseType;
   }
 
   if (method.toLowerCase() === 'get') {
@@ -29,10 +40,11 @@ export const apiFetch = async (url, method, params, body, isAuth = false) => {
 
       return response.data;
     } catch (e) {
+      console.log(e);
       if (e?.response?.status === 401) {
         Router.push('/sign-in');
       }
-      return e.response.data;
+      return e?.response?.data;
     }
   } else if (method.toLowerCase() === 'put') {
     try {

@@ -91,6 +91,29 @@ app.post("/signin", async (req, res) => {
 
 // PROTECTED ROUTES
 
+app.get("/me", jwtLib.authorize, async (req, res) => {
+  const { id } = req.query;
+
+  if (!id) {
+    return res
+      .status(400)
+      .json({ success: false, error: "You must provide the user id." });
+  }
+
+  try {
+    const user = await db.getSingleUserById(Number(id));
+    delete user.password;
+
+    return res.status(200).json({ success: true, data: user });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      error: "There was an error retrieving your record.",
+    });
+  }
+});
+
 app.post("/upload", jwtLib.authorize, async (req, res) => {
   const { id } = req.body;
 
@@ -190,6 +213,9 @@ app.get("/uploads", jwtLib.authorize, async (req, res) => {
         });
         return;
       }
+
+      result.name = rec.name;
+
       return result;
     });
 

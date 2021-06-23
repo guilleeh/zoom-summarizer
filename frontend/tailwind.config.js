@@ -14,6 +14,8 @@ module.exports = {
       blue: colors.sky,
       red: colors.rose,
       pink: colors.fuchsia,
+      white: colors.white,
+      green: colors.green,
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
