@@ -19,21 +19,20 @@ const Dropzone = ({ setError, handleUpload }) => {
       return;
     }
 
-    const files = [];
-    acceptedFiles.forEach((file) => {
-      if (!isValidFileSize(file) || !isValidFileType(file)) {
-        files.push(file);
-      }
-    });
+    const file = acceptedFiles[0];
 
-    if (files.length === 0) {
-      // Files are good to go!
-      const file = acceptedFiles[0];
-      handleUpload(file);
-    } else {
-      setError(`File size too large or unsupported.`);
+    if (!isValidFileSize(file)) {
+      setError(`File size must be less than 5mb.`);
       return;
     }
+
+    if (!isValidFileType(file)) {
+      setError('File must be of type .mp3.');
+      return;
+    }
+    // Files are good to go!
+    setError(null);
+    handleUpload(file);
   }, []);
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -42,7 +41,7 @@ const Dropzone = ({ setError, handleUpload }) => {
       {...getRootProps()}
       className="flex justify-center py-10 border rounded shadow"
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps()} accept=".mp3,audio/*" />
       {isDragActive ? (
         <p>Drop the files here ...</p>
       ) : (

@@ -16,6 +16,8 @@ module.exports = {
       pink: colors.fuchsia,
       white: colors.white,
       green: colors.green,
+      indigo: colors.indigo,
+      yellow: colors.yellow,
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],

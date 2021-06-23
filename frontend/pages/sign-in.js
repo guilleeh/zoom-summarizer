@@ -31,23 +31,27 @@ const SignIn = () => {
   };
 
   return (
-    <div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div class="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
         <div>
-          <img class="mx-auto h-25 w-auto" src="logo_black.png" alt="logo" />
-          <h2 class=" text-center text-3xl font-extrabold text-gray-900">
+          <img
+            className="mx-auto h-25 w-auto"
+            src="logo_black.png"
+            alt="logo"
+          />
+          <h2 className=" text-center text-3xl font-extrabold text-gray-900">
             Sign In
           </h2>
         </div>
-        <form class="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <input type="hidden" name="remember" value="true" />
-          <div class="rounded-md shadow-sm -space-y-px">
+          <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label for="email-address" class="sr-only">
+              <label htmlFor="email-address" className="sr-only">
                 Email address
               </label>
               <input
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
                 type="email"
                 required
@@ -55,15 +59,15 @@ const SignIn = () => {
               />
             </div>
             <div>
-              <label for="password" class="sr-only">
+              <label for="password" className="sr-only">
                 Password
               </label>
               <input
                 name="password"
                 type="password"
-                autocomplete="current-password"
+                autoComplete="current-password"
                 required
-                class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
                 {...register('password')}
               />
@@ -73,18 +77,18 @@ const SignIn = () => {
           <div>
             <button
               type="submit"
-              class="group relative w-full space-x-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-200 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full space-x-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 <svg
-                  class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
+                  className="h-5 w-5 text-indigo-500 "
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
                   fill="currentColor"
                   aria-hidden="true"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
                     clipRule="evenodd"
                   />

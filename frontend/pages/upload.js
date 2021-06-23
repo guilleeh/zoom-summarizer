@@ -64,13 +64,13 @@ export default function Home() {
             <CustomLoader />
           </div>
         )}
-
-        {error && (
-          <div>
-            <Alert title="Upload Error. " subtitle={error} />{' '}
-          </div>
-        )}
       </div>
+
+      {error && (
+        <div className="container mx-auto w-1/3">
+          <Alert title="Upload Error. " subtitle={error} />{' '}
+        </div>
+      )}
     </>
   );
 }
