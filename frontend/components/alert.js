@@ -1,11 +1,11 @@
 const Alert = ({ title, subtitle }) => {
   return (
     <div
-      class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+      className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
       role="alert"
     >
-      <strong class="font-bold">{title}</strong>
-      <span class="block sm:inline">{subtitle}</span>
+      <strong className="font-bold">{title}</strong>
+      <span className="block sm:inline">{subtitle}</span>
     </div>
   );
 };

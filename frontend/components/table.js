@@ -1,5 +1,4 @@
 const Table = ({ data, handleDownload }) => {
-  console.log(data);
   const renderStatus = (status) => {
     switch (status) {
       case 'completed':

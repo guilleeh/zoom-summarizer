@@ -41,11 +41,11 @@ const SignIn = () => {
           <h2 className=" text-center text-3xl font-extrabold text-gray-900">
             Sign In
           </h2>
-          <p class="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600">
             Or
             <a
               href="/sign-up"
-              class="font-medium ml-1 text-indigo-600 hover:text-indigo-500"
+              className="font-medium ml-1 text-indigo-600 hover:text-indigo-500"
             >
               sign up for a new account.
             </a>
@@ -67,7 +67,7 @@ const SignIn = () => {
               />
             </div>
             <div>
-              <label for="password" className="sr-only">
+              <label htmlFor="password" className="sr-only">
                 Password
               </label>
               <input
@@ -81,7 +81,6 @@ const SignIn = () => {
               />
             </div>
           </div>
-
           <div>
             <button
               type="submit"
@@ -105,13 +104,11 @@ const SignIn = () => {
               Sign in
             </button>
           </div>
-
           {loading && (
             <div style={{ display: 'flex', justifyContent: 'center' }}>
               <CustomLoader />
             </div>
           )}
-
           {error && (
             <Alert
               title="Sign in error. "
