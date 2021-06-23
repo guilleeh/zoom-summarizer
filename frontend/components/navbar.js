@@ -67,14 +67,14 @@ const Navbar = ({ me }) => {
             <div class="block sm">
               <div class="flex space-x-4">
                 <a
-                  href="#"
+                  href="/upload"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Upload
                 </a>
 
                 <a
-                  href="#"
+                  href="/"
                   class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Recordings
