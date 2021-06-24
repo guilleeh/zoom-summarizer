@@ -65,7 +65,6 @@ export default function Home() {
           </div>
         )}
       </div>
-
       {error && (
         <div className="container mx-auto w-1/3">
           <Alert title="Upload Error. " subtitle={error} />{' '}
