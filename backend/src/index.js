@@ -136,6 +136,7 @@ app.post("/upload", jwtLib.authorize, async (req, res) => {
 
     const body = {
       audio_url: Location,
+      auto_highlights: true,
     };
 
     // call aai api
@@ -258,11 +259,11 @@ app.post("/generate-pdf", jwtLib.authorize, async (req, res) => {
       return;
     }
 
-    const { text } = result;
+    const { text, auto_highlights_result } = result;
     const recordingRecord = await db.getSingleRecording(transcriptId);
     const { name } = recordingRecord;
 
-    pdfLib.generatePdf("Transcript", text, res);
+    pdfLib.generatePdf("Transcript", text, auto_highlights_result, res);
   } catch (e) {
     console.log(e);
     res.status(500).json({

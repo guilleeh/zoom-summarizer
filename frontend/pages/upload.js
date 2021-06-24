@@ -1,13 +1,13 @@
-import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import FileDownload from 'react-file-download';
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import FileDownload from "react-file-download";
 
-import Navbar from '../components/navbar';
-import { apiFetch } from '../api/fetch';
-import CustomLoader from '../components/loader';
-import Dropzone from '../components/dropzone';
-import Alert from '../components/alert';
+import Navbar from "../components/navbar";
+import { apiFetch } from "../api/fetch";
+import CustomLoader from "../components/loader";
+import Dropzone from "../components/dropzone";
+import Alert from "../components/alert";
 
 export default function Home() {
   const router = useRouter();
@@ -16,9 +16,9 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const meCall = async () => {
-    const id = window.localStorage.getItem('id');
+    const id = window.localStorage.getItem("id");
     const url = process.env.API_URL + `me`;
-    const resp = await apiFetch(url, 'get', { id }, null, true);
+    const resp = await apiFetch(url, "get", { id }, null, true);
     if (resp.success) {
       setMe(resp.data);
     }
@@ -26,20 +26,20 @@ export default function Home() {
 
   const handleUpload = async (file) => {
     setLoading(true);
-    const id = window.localStorage.getItem('id');
+    const id = window.localStorage.getItem("id");
     const formData = new FormData();
-    formData.append('id', id);
-    formData.append('uploadedFile', file);
+    formData.append("id", id);
+    formData.append("uploadedFile", file);
 
-    const url = process.env.API_URL + 'upload';
-    const resp = await apiFetch(url, 'post', null, formData, true);
+    const url = process.env.API_URL + "upload";
+    const resp = await apiFetch(url, "post", null, formData, true);
 
     setLoading(false);
     if (resp.success) {
       setError(null);
-      router.push('/');
+      router.push("/");
     } else {
-      setError('There was a problem uploading your recording.');
+      setError("There was a problem uploading your recording.");
     }
   };
 
@@ -53,6 +53,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Zoomerizer</title>
+      </Head>
       <Navbar me={me} />
       <div className="container mx-auto py-4">
         <h2 class="text-2xl font-bold text-center py-10 leading-7 text-gray-900 sm:text-3xl sm:truncate">
@@ -60,14 +63,14 @@ export default function Home() {
         </h2>
         <Dropzone setError={setError} handleUpload={handleUpload} />
         {loading && (
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <CustomLoader />
           </div>
         )}
       </div>
       {error && (
-        <div className="container mx-auto w-1/3">
-          <Alert title="Upload Error. " subtitle={error} />{' '}
+        <div className="container mx-auto lg:w-1/3 sm:w-full">
+          <Alert title="Upload Error. " subtitle={error} />{" "}
         </div>
       )}
     </>

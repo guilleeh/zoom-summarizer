@@ -1,6 +1,6 @@
 const PDF = require("pdfkit");
 
-const generatePdf = (title, text, res) => {
+const generatePdf = (title, text, terms, res) => {
   const pdf = new PDF({ bufferPages: true });
 
   let buffers = [];
@@ -20,12 +20,29 @@ const generatePdf = (title, text, res) => {
     align: "center",
     paragraphGap: 20,
   });
+
   pdf.font("Times-Roman").fontSize(12).text(text, {
     lineGap: 20,
   });
 
+  if (terms) {
+    const termsArr = terms.results.sort((a, b) => b.rank - a.rank);
+    const cleanedTerms = termsArr.map((term) => term.text);
+
+    pdf.font("Times-Roman").fontSize(16).text("Key Terms", {
+      align: "center",
+      paragraphGap: 20,
+    });
+
+    pdf
+      .font("Times-Roman")
+      .fontSize(12)
+      .list(cleanedTerms, { listType: "numbered" });
+  }
+
   pdf
     .fillColor("gray")
+    .fontSize(12)
     .text(
       "Transcript provided by AssemblyAI ",
       pdf.page.width - 200,

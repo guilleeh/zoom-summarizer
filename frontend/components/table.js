@@ -1,26 +1,27 @@
 const Table = ({ data, handleDownload }) => {
+  console.log(data);
   const renderStatus = (status) => {
     switch (status) {
-      case 'completed':
+      case "completed":
         return (
           <div class="bg-green-500 px-3 py-2 font-extrabold rounded-full">
             Completed
           </div>
         );
-      case 'queued':
+      case "queued":
         return (
           <div class="bg-yellow-500 px-3 py-2 font-extrabold rounded-full">
             Queued
           </div>
         );
-      case 'processing':
+      case "processing":
         return (
           <div class="bg-yellow-500 px-3 py-2 font-extrabold rounded-full">
             Processing
           </div>
         );
 
-      case 'error':
+      case "error":
         return (
           <div class="bg-error-600 px-3 py-2 font-extrabold rounded-full">
             Error
@@ -34,10 +35,10 @@ const Table = ({ data, handleDownload }) => {
   if (!data || data.length === 0) {
     return (
       <h3 className="text-2xl font-bold text-center py-10 leading-7 text-gray-900">
-        It looks like you don't have any uploaded recordings.{' '}
+        It looks like you don't have any uploaded recordings.{" "}
         <a className="underline text-blue-800" href="/upload">
           Upload
-        </a>{' '}
+        </a>{" "}
         and audio file to see your transcripts here!
       </h3>
     );
@@ -69,10 +70,10 @@ const Table = ({ data, handleDownload }) => {
                 </td>
                 <td class="w-1/3 py-3 px-10">
                   <div className="flex ">
-                    {item.status === 'completed' && (
+                    {item.status === "completed" && (
                       <button
                         className={`bg-blue-500 px-3 py-2 font-extrabold rounded-full inline-flex items-center`}
-                        disabled={item.status !== 'completed'}
+                        disabled={item.status !== "completed"}
                         onClick={() => handleDownload(item.id, item.name)}
                       >
                         <svg

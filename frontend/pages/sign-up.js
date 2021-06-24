@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import Head from "next/head";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 
-import { apiFetch } from '../api/fetch';
-import Alert from '../components/alert';
-import CustomLoader from '../components/loader';
+import { apiFetch } from "../api/fetch";
+import Alert from "../components/alert";
+import CustomLoader from "../components/loader";
 
 const SignIn = () => {
-  const url = process.env.API_URL + 'signup';
+  const url = process.env.API_URL + "signup";
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -20,9 +21,9 @@ const SignIn = () => {
     setErrorMessage(null);
     setLoading(true);
     const { email, password, name } = data;
-    const resp = await apiFetch(url, 'post', null, { email, password, name });
+    const resp = await apiFetch(url, "post", null, { email, password, name });
     if (resp.success) {
-      router.push('/sign-in');
+      router.push("/sign-in");
     } else {
       setErrorMessage(resp.error);
       setError(true);
@@ -31,102 +32,107 @@ const SignIn = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <img
-            className="mx-auto h-25 w-auto"
-            src="logo_black.png"
-            alt="logo"
-          />
-          <h2 className=" text-center text-3xl font-extrabold text-gray-900">
-            Sign Up
-          </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or
-            <a
-              href="/sign-in"
-              className="font-medium ml-1 text-indigo-600 hover:text-indigo-500"
-            >
-              sign in with your account.
-            </a>
-          </p>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
-          <input type="hidden" name="remember" value="true" />
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Name
-              </label>
-              <input
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Name"
-                type="text"
-                required
-                {...register('name')}
-              />
-            </div>
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                Email address
-              </label>
-              <input
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                type="email"
-                required
-                {...register('email')}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                {...register('password')}
-              />
-            </div>
-          </div>
-
+    <>
+      <Head>
+        <title>Zoomerizer</title>
+      </Head>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
           <div>
-            <button
-              type="submit"
-              className="group relative w-full space-x-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                <svg
-                  className="h-5 w-5 text-indigo-500 "
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </span>
+            <img
+              className="mx-auto h-25 w-auto"
+              src="logo_black.png"
+              alt="logo"
+            />
+            <h2 className=" text-center text-3xl font-extrabold text-gray-900">
               Sign Up
-            </button>
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              Or
+              <a
+                href="/sign-in"
+                className="font-medium ml-1 text-indigo-600 hover:text-indigo-500"
+              >
+                sign in with your account.
+              </a>
+            </p>
           </div>
-          {loading && (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <CustomLoader />
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
+            <input type="hidden" name="remember" value="true" />
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Name
+                </label>
+                <input
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Name"
+                  type="text"
+                  required
+                  {...register("name")}
+                />
+              </div>
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Email address
+                </label>
+                <input
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Email address"
+                  type="email"
+                  required
+                  {...register("email")}
+                />
+              </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <input
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Password"
+                  {...register("password")}
+                />
+              </div>
             </div>
-          )}
-          {error && <Alert title="Sign up error. " subtitle={errorMessage} />}
-        </form>
+
+            <div>
+              <button
+                type="submit"
+                className="group relative w-full space-x-4 flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <svg
+                    className="h-5 w-5 text-indigo-500 "
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </span>
+                Sign Up
+              </button>
+            </div>
+            {loading && (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <CustomLoader />
+              </div>
+            )}
+            {error && <Alert title="Sign up error. " subtitle={errorMessage} />}
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

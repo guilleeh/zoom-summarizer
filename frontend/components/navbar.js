@@ -1,17 +1,18 @@
-import { useRouter } from 'next/router';
-import Image from 'next/image';
+import { useRouter } from "next/router";
+import Image from "next/image";
 
-import Logo from '../public/logo.png';
+import Logo from "../public/logo.png";
 
 const Navbar = ({ me }) => {
   const router = useRouter();
-  const name = me ? `Welcome, ${me.name.split(' ')[0]}` : 'Welcome';
+  const name = me ? `Welcome, ${me.name.split(" ")[0]}` : "Welcome";
 
   const handleLogout = () => {
-    window.localStorage.removeItem('jwt');
-    window.localStorage.removeItem('id');
-    router.push('/sign-in');
+    window.localStorage.removeItem("jwt");
+    window.localStorage.removeItem("id");
+    router.push("/sign-in");
   };
+
   return (
     <nav class="bg-gray-800">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">

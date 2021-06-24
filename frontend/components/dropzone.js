@@ -1,5 +1,5 @@
-import { useCallback } from 'react';
-import { useDropzone } from 'react-dropzone';
+import { useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
 const Dropzone = ({ setError, handleUpload }) => {
   const isValidFileSize = (file) => {
@@ -8,8 +8,8 @@ const Dropzone = ({ setError, handleUpload }) => {
   };
 
   const isValidFileType = (file) => {
-    const fileType = file.name.split('.').pop().toLowerCase();
-    return ['mp3'].includes(fileType);
+    const fileType = file.name.split(".").pop().toLowerCase();
+    return ["mp3"].includes(fileType);
   };
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -27,7 +27,7 @@ const Dropzone = ({ setError, handleUpload }) => {
     }
 
     if (!isValidFileType(file)) {
-      setError('File must be of type .mp3.');
+      setError("File must be of type .mp3.");
       return;
     }
     // Files are good to go!
@@ -43,9 +43,9 @@ const Dropzone = ({ setError, handleUpload }) => {
     >
       <input {...getInputProps()} accept=".mp3,audio/*" />
       {isDragActive ? (
-        <p>Drop the files here ...</p>
+        <p>Drop the file here ...</p>
       ) : (
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>Drag 'n' drop a file here, or click to select file</p>
       )}
     </div>
   );

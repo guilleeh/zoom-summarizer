@@ -1,12 +1,12 @@
-import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import FileDownload from 'react-file-download';
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import FileDownload from "react-file-download";
 
-import Navbar from '../components/navbar';
-import { apiFetch } from '../api/fetch';
-import CustomLoader from '../components/loader';
-import Table from '../components/table';
-import Reload from '../components/reload';
+import Navbar from "../components/navbar";
+import { apiFetch } from "../api/fetch";
+import CustomLoader from "../components/loader";
+import Table from "../components/table";
+import Reload from "../components/reload";
 
 export default function Home() {
   const [me, setMe] = useState(null);
@@ -14,9 +14,9 @@ export default function Home() {
   const [recordings, setRecordings] = useState(null);
 
   const meCall = async () => {
-    const id = window.localStorage.getItem('id');
+    const id = window.localStorage.getItem("id");
     const url = process.env.API_URL + `me`;
-    const resp = await apiFetch(url, 'get', { id }, null, true);
+    const resp = await apiFetch(url, "get", { id }, null, true);
     if (resp.success) {
       setMe(resp.data);
     }
@@ -24,11 +24,11 @@ export default function Home() {
 
   const recordingsCall = async () => {
     setIsLoading(true);
-    const id = window.localStorage.getItem('id');
+    const id = window.localStorage.getItem("id");
 
-    const url = process.env.API_URL + 'uploads';
+    const url = process.env.API_URL + "uploads";
 
-    const resp = await apiFetch(url, 'get', { id }, null, true);
+    const resp = await apiFetch(url, "get", { id }, null, true);
 
     if (resp.success) {
       setRecordings(resp.data);
@@ -38,18 +38,18 @@ export default function Home() {
   };
 
   const handleDownload = async (transcriptId, name) => {
-    const url = process.env.API_URL + 'generate-pdf';
+    const url = process.env.API_URL + "generate-pdf";
 
     const resp = await apiFetch(
       url,
-      'post',
+      "post",
       null,
       { transcriptId },
       true,
-      'blob',
+      "blob"
     );
 
-    const fileName = name ? name.split('.')[0] : 'Transcript';
+    const fileName = name ? name.split(".")[0] : "Transcript";
 
     FileDownload(resp, `${fileName}.pdf`);
   };
@@ -65,6 +65,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Zoom Summarizer</title>
+      </Head>
       <Navbar me={me} />
       <div className="container mx-auto py-4">
         <h2 class="text-2xl font-bold text-center py-10 leading-7 text-gray-900 sm:text-3xl sm:truncate">
