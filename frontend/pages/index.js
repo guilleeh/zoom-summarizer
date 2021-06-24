@@ -37,6 +37,14 @@ export default function Home() {
     setIsLoading(false);
   };
 
+  const ping = async () => {
+    const url = process.env.API_URL;
+    const resp = await apiFetch(url, "get");
+    if (resp.success) {
+      console.log(resp.data);
+    }
+  };
+
   const handleDownload = async (transcriptId, name) => {
     const url = process.env.API_URL + "generate-pdf";
 
@@ -55,6 +63,7 @@ export default function Home() {
   };
 
   useEffect(() => {
+    ping();
     meCall();
     recordingsCall();
   }, []);

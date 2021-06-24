@@ -1,0 +1,9 @@
+DATABASE_URL = 'postgresql://zoom_summarizer_user@localhost:5432/zoom-summarizer'
+SALT_ROUNDS = 14
+JWT_SECRET = 'Makethisaverylongstring'
+JWT_EXPIRE_TIME = 36000
+
+AWS_S3_BUCKET_NAME = 'you-bucket-name'
+
+ASSEMBLYAI_API_KEY = 'you_aai_api_key'
+ASSEMBLYAI_API_URL = 'https://api.assemblyai.com/v2/transcript'

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 
@@ -30,6 +30,18 @@ const SignIn = () => {
     }
     setLoading(false);
   };
+
+  const ping = async () => {
+    const url = process.env.API_URL;
+    const resp = await apiFetch(url, "get");
+    if (resp.success) {
+      console.log(resp.data);
+    }
+  };
+
+  useEffect(() => {
+    ping();
+  }, []);
 
   return (
     <>
